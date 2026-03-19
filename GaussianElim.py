@@ -1,5 +1,6 @@
 import numpy as np
-def elim(matrix, mult=False):
+def elim(matrix, b, mult=False):
+    matrix=np.hstack((matrix, b.T))
     multArray=np.zeros(np.shape(matrix))
     for row in range(len(matrix)):
         for row2 in range(row+1,len(matrix)):
@@ -7,7 +8,6 @@ def elim(matrix, mult=False):
             matrix[row2]=matrix[row2] - multiplier*matrix[row]
             multArray[row2][row]=multiplier
 
-    print(matrix)
     results=np.zeros(len(matrix))
     results[-1]=matrix[-1][-1]/matrix[-1][-2]
     for i in range(len(matrix)-2,-1,-1):
@@ -18,4 +18,4 @@ def elim(matrix, mult=False):
     if mult:
         return results,multArray
     return results
-print(elim(np.array([[2,1,-1,8],[-3,-1,2,-11],[-2,1,2,-3.0]])))
+print(elim(np.array([[2,1,-1],[-3,-1,2],[-2,1,2.0]]), np.array([[8, -11, -3.0]])))
